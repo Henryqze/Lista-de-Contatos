@@ -5,7 +5,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-
 public class Main{
     static ArrayList<Pessoa> contatos = new ArrayList<>();
     public static void main(String[] args) {
@@ -24,19 +23,15 @@ public class Main{
             }
             switch (opcao) {
                 case 1:
-                    System.out.println("Adicionando...");
                     adicionarContato(contatos, entrada);
                     break;
                 case 2:
-                    System.out.println("Listando...");
                     listarContatos(contatos);
                     break;
                 case 3:
-                    System.out.println("Buscando...");
                     buscarNome(contatos, entrada);
                     break;
                 case 4:
-                    System.out.println("Excluindo...");
                     excluirContatos(contatos, entrada);
                     break;
                 case 5:
@@ -47,8 +42,6 @@ public class Main{
                     System.out.println("Somente as opções já passadas.");
                     break;
             }
-
-
         }
     }
 
@@ -70,7 +63,11 @@ public class Main{
          System.out.println("Digite o número: ");
          String numeroCelular = entrada.nextLine();
 
-         Pessoa contato = new Pessoa(nome, numeroCelular);
+         System.out.println("Digite o email: ");
+         String email = entrada.nextLine();
+
+         System.out.println("Adicionando...");
+         Pessoa contato = new Pessoa(nome, numeroCelular, email);
 
          contatos.add(contato);
 
@@ -81,7 +78,7 @@ public class Main{
             System.out.println("Lista de contatos vazia.");
         }else {
             for (int i = 0; i < contatos.size(); i++) {
-                System.out.println((i + 1) + " - " + contatos.get(i).getNome() + " | " + contatos.get(i).getNumeroCelular());
+                System.out.println((i + 1) + " - " + contatos.get(i));
             }
         }
 
@@ -94,12 +91,14 @@ public class Main{
         }
 
         for (int i = 0; i < contatos.size(); i++) {
-            System.out.println((i + 1) + " - " + contatos.get(i).getNome() + " | " + contatos.get(i).getNumeroCelular());
+            System.out.println((i + 1) + " - " + contatos.get(i));
         }
+
         System.out.print("Deseja remover qual contato: ");
         int remover = entrada.nextInt();
         contatos.remove(remover - 1);
         System.out.println("Excluindo contato da listagem.");
+        System.out.println("Removendo...");
     }
 
 
@@ -115,7 +114,7 @@ public class Main{
 
         for (int i = 0; i < contatos.size(); i++) {
             if (contatos.get(i).getNome().toLowerCase().contains(procurar.toLowerCase())){
-                System.out.println((i + 1) + " - " + contatos.get(i).getNome() + " | " + contatos.get(i).getNumeroCelular());
+                System.out.println((i + 1) + " - " + contatos.get(i));
                 encontrado = true;
             }
         }
