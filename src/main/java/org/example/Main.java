@@ -2,13 +2,13 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 
 public class Main{
-    static ArrayList<Pessoa> contatos = new ArrayList<>();
     public static void main(String[] args) {
-
+        ArrayList<Pessoa> contatos = new ArrayList<>();
         Scanner entrada = new Scanner(System.in);
         int opcao = 0;
 
@@ -17,7 +17,7 @@ public class Main{
             try{
                 opcao = entrada.nextInt();
                 entrada.nextLine();
-            } catch (IllegalArgumentException | InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("As opções existentes são apenas as listadas acima.");
                 entrada.nextLine();
             }
@@ -57,19 +57,37 @@ public class Main{
     }
 
      public static void adicionarContato(ArrayList<Pessoa> contatos, Scanner entrada){
-         System.out.println("Digite o nome da pessoa: ");
-         String nome = entrada.nextLine();
+            String nome, numeroCelular, email;
 
-         System.out.println("Digite o número: ");
-         String numeroCelular = entrada.nextLine();
+            do {
+                System.out.println("Digite o nome da pessoa: ");
+                nome = entrada.nextLine();
+                if (nome.isBlank()){
+                    System.out.println("Nome necessário.");
+                }
+            }while (nome.isBlank());
 
-         System.out.println("Digite o email: ");
-         String email = entrada.nextLine();
+            do {
+                System.out.println("Digite o número: ");
+                numeroCelular = entrada.nextLine();
+                if (numeroCelular.isBlank()){
+                    System.out.println("Número necessário.");
+                }
+            }while(numeroCelular.isBlank());
 
-         System.out.println("Adicionando...");
-         Pessoa contato = new Pessoa(nome, numeroCelular, email);
+            do {
+                System.out.println("Digite o email: ");
+                email = entrada.nextLine();
+                if (email.isBlank()){
+                    System.out.println("Email necessário.");
+                }
+            }while (email.isBlank());
 
-         contatos.add(contato);
+
+
+            System.out.println("Adicionando...");
+            Pessoa contato = new Pessoa(nome, numeroCelular, email);
+            contatos.add(contato);
 
     }
 
@@ -96,15 +114,21 @@ public class Main{
 
         System.out.print("Deseja remover qual contato: ");
         int remover = entrada.nextInt();
-        contatos.remove(remover - 1);
+
+        if(remover >= 1 && remover <= contatos.size()) {
+            contatos.remove(remover - 1);
+        }else{
+            System.out.println("Não encontrado.");
+        }
+
+
         System.out.println("Excluindo contato da listagem.");
-        System.out.println("Removendo...");
     }
 
 
     public static void buscarNome(ArrayList<Pessoa> contatos, Scanner entrada) {
         if (contatos.isEmpty()){
-            System.out.println("Nenhuma nome para procurar");
+            System.out.println("Nenhum contato na lista.");
             return;
         }
 
@@ -118,6 +142,7 @@ public class Main{
                 encontrado = true;
             }
         }
+
         if (!encontrado){
             System.out.println("Nenhum contato encontrado.");
 
