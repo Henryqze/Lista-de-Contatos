@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
+
 public class Main{
+    static ArrayList<Pessoa> contatos = new ArrayList<>();
     public static void main(String[] args) {
-        ArrayList<String> contatos = new ArrayList<>();
+
         Scanner entrada = new Scanner(System.in);
         int opcao = 0;
 
@@ -22,19 +25,19 @@ public class Main{
             switch (opcao) {
                 case 1:
                     System.out.println("Adicionando...");
-                    adicionar(contatos, entrada);
+                    adicionarContato(contatos, entrada);
                     break;
                 case 2:
                     System.out.println("Listando...");
-                    listar(contatos);
+                    listarContatos(contatos);
                     break;
                 case 3:
-                    buscarNome(contatos, entrada);
                     System.out.println("Buscando...");
+                    buscarNome(contatos, entrada);
                     break;
                 case 4:
-                    excluir(contatos, entrada);
                     System.out.println("Excluindo...");
+                    excluirContatos(contatos, entrada);
                     break;
                 case 5:
                     sair();
@@ -48,6 +51,7 @@ public class Main{
 
         }
     }
+
     public static void menu(){
         String mensagem = "MENU \n" +
                 "1 - Adicionar contato\n" +
@@ -59,32 +63,38 @@ public class Main{
         System.out.print(mensagem);
     }
 
-    public static void adicionar(ArrayList<String> contatos, Scanner entrada){
-        System.out.println("Digite o contato da pessoa: ");
-        String novosContatos = entrada.nextLine();
-        contatos.add(novosContatos);
+     public static void adicionarContato(ArrayList<Pessoa> contatos, Scanner entrada){
+         System.out.println("Digite o nome da pessoa: ");
+         String nome = entrada.nextLine();
+
+         System.out.println("Digite o número: ");
+         String numeroCelular = entrada.nextLine();
+
+         Pessoa contato = new Pessoa(nome, numeroCelular);
+
+         contatos.add(contato);
 
     }
 
-    public static void listar(ArrayList<String> contatos){
+    public static void listarContatos(ArrayList<Pessoa> contatos){
         if(contatos.isEmpty()) {
             System.out.println("Lista de contatos vazia.");
         }else {
             for (int i = 0; i < contatos.size(); i++) {
-                System.out.println((i + 1) + " - " + contatos.get(i));
+                System.out.println((i + 1) + " - " + contatos.get(i).getNome() + " | " + contatos.get(i).getNumeroCelular());
             }
         }
 
     }
 
-    public static void excluir(ArrayList<String> contatos, Scanner entrada){
+    public static void excluirContatos(ArrayList<Pessoa> contatos, Scanner entrada){
         if (contatos.isEmpty()){
             System.out.println("Nenhum contato para excluir");
             return;
         }
 
         for (int i = 0; i < contatos.size(); i++) {
-            System.out.println((i + 1) + " - " + contatos.get(i));
+            System.out.println((i + 1) + " - " + contatos.get(i).getNome() + " | " + contatos.get(i).getNumeroCelular());
         }
         System.out.print("Deseja remover qual contato: ");
         int remover = entrada.nextInt();
@@ -93,7 +103,7 @@ public class Main{
     }
 
 
-    public static void buscarNome(ArrayList<String> contatos, Scanner entrada) {
+    public static void buscarNome(ArrayList<Pessoa> contatos, Scanner entrada) {
         if (contatos.isEmpty()){
             System.out.println("Nenhuma nome para procurar");
             return;
@@ -104,8 +114,8 @@ public class Main{
         boolean encontrado = false;
 
         for (int i = 0; i < contatos.size(); i++) {
-            if (contatos.get(i).toLowerCase().contains(procurar.toLowerCase())){
-                System.out.println((i + 1) + " - " + contatos.get(i));
+            if (contatos.get(i).getNome().toLowerCase().contains(procurar.toLowerCase())){
+                System.out.println((i + 1) + " - " + contatos.get(i).getNome() + " | " + contatos.get(i).getNumeroCelular());
                 encontrado = true;
             }
         }
