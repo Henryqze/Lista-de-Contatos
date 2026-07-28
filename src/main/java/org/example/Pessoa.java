@@ -1,36 +1,15 @@
 package org.example;
 
-public class Pessoa {
-    private  String nome;
-    private String numeroCelular;
+public class Pessoa extends Contatos {
     private String email;
 
     public Pessoa(String nome, String numeroCelular, String email){
-        this.nome = nome;
-        this.numeroCelular = numeroCelular;
+        super(nome, numeroCelular);
         this.email = email;
 
     }
-
-    public String getNumeroCelular(){
-
-        return numeroCelular;
-    }
-
-    public void setNumeroCelular(String numeroCelular) {
-        this.numeroCelular = numeroCelular;
-    }
-
-    public String getNome(){
-
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getEmail(){
+
         return email;
     }
 
@@ -40,7 +19,7 @@ public class Pessoa {
 
     @Override
     public String toString(){
-        String mensagem = String.format("Nome: %s | Celular: %s | Email: %s ", nome, numeroCelular, email);
+        String mensagem = String.format("Nome: %s | Celular: %s | Email: %s ",getNome(), getNumeroCelular(), email);
         return mensagem;
     }
 }

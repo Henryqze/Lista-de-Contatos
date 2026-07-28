@@ -1,19 +1,24 @@
 package org.example;
 
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 
 public class Main{
     public static void main(String[] args) {
         ArrayList<Pessoa> contatos = new ArrayList<>();
+
+        ArrayList<Emergencia> contatosEmergencia = new ArrayList<>();
+
+
         Scanner entrada = new Scanner(System.in);
         int opcao = 0;
 
-        while (opcao != 5) {
-            menu();
+        while (opcao != 7) {
+            Menu mostrarMenu = new Menu();
+            mostrarMenu.Menu();
             try{
                 opcao = entrada.nextInt();
                 entrada.nextLine();
@@ -35,6 +40,12 @@ public class Main{
                     excluirContatos(contatos, entrada);
                     break;
                 case 5:
+                    emergencia(contatosEmergencia, entrada);
+                    break;
+                case 6:
+                    mostrarEmergencia(contatosEmergencia, entrada);
+                    break;
+                case 7:
                     sair();
                     System.out.println("-----------");
                     break;
@@ -43,17 +54,6 @@ public class Main{
                     break;
             }
         }
-    }
-
-    public static void menu(){
-        String mensagem = "MENU \n" +
-                "1 - Adicionar contato\n" +
-                "2 - Listar contatos\n" +
-                "3 - Encontrar por nome\n" +
-                "4 - Excluir contatos\n" +
-                "5 - Sair\n" +
-                "Escolha sua opção: ";
-        System.out.print(mensagem);
     }
 
      public static void adicionarContato(ArrayList<Pessoa> contatos, Scanner entrada){
@@ -150,7 +150,65 @@ public class Main{
 
     }
 
+    public static void emergencia(ArrayList<Emergencia> contatosEmergencia, Scanner entrada){
+        String nome, numeroCelular, relacao;
+
+        do {
+            System.out.println("Digite o nome da pessoa: ");
+            nome = entrada.nextLine();
+            if (nome.isBlank()){
+                System.out.println("Nome necessário.");
+            }
+        }while (nome.isBlank());
+
+        do {
+            System.out.println("Digite o número: ");
+            numeroCelular = entrada.nextLine();
+            if (numeroCelular.isBlank()){
+                System.out.println("Número necessário.");
+            }
+        }while(numeroCelular.isBlank());
+
+        do {
+            System.out.println("Digite o Parentesco: ");
+            relacao = entrada.nextLine();
+            if (relacao.isBlank()){
+                System.out.println("Parentesco necessário.");
+            }
+        }while(relacao.isBlank());
+
+        System.out.println("Adicionando contato de Emergência...");
+        Emergencia somenteEmergencia = new Emergencia(nome, numeroCelular, relacao);
+        contatosEmergencia.add(somenteEmergencia);
+    }
+
+
+    public static void mostrarEmergencia(ArrayList<Emergencia> contatosEmergencia, Scanner entrada){
+        if (contatosEmergencia.isEmpty()){
+            System.out.println("Contato de Emergência vazio.");
+            return;
+        }
+        System.out.print("Qual o nome do contato que deseja procurar: ");
+        String procurar = entrada.nextLine();
+        boolean encontrado = false;
+
+        for (int i = 0; i < contatosEmergencia.size(); i++) {
+            if (contatosEmergencia.get(i).getNome().toLowerCase().contains(procurar.toLowerCase())) {
+                System.out.println((i + 1) + " - " + contatosEmergencia.get(i));
+                encontrado = true;
+            }
+        }
+        if (!encontrado){
+            System.out.println("Não existe esse contato de emergência.");
+        }
+
+    }
+
+
+
+
     public static void sair(){
+
         System.out.println("Saindo do aplicativo, volte sempre!");
     }
 
