@@ -1,4 +1,4 @@
-package org.example;
+package br.com.listatelefonica;
 
 
 import java.util.ArrayList;
@@ -15,45 +15,52 @@ public class Main{
 
         Scanner entrada = new Scanner(System.in);
         int opcao = 0;
+        boolean valida = false;
 
-        while (opcao != 7) {
+        while (opcao != 7 && !valida) {
             Menu mostrarMenu = new Menu();
             mostrarMenu.Menu();
-            try{
-                opcao = entrada.nextInt();
+            if (entrada.hasNextInt()) {
+                try {
+                    opcao = entrada.nextInt();
+                    entrada.nextLine();
+                } catch (InputMismatchException e) {
+                    System.out.println("As opções existentes são apenas as listadas acima.");
+                    entrada.nextLine();
+                }
+                switch (opcao) {
+                    case 1:
+                        adicionarContato(contatos, entrada);
+                        break;
+                    case 2:
+                        listarContatos(contatos);
+                        break;
+                    case 3:
+                        buscarNome(contatos, entrada);
+                        break;
+                    case 4:
+                        excluirContatos(contatos, entrada);
+                        break;
+                    case 5:
+                        emergencia(contatosEmergencia, entrada);
+                        break;
+                    case 6:
+                        mostrarEmergencia(contatosEmergencia, entrada);
+                        break;
+                    case 7:
+                        sair();
+                        System.out.println("-----------");
+                        break;
+                    default:
+                        System.out.println("Somente as opções já passadas.");
+                        break;
+                }
+            }else{
+                System.out.println("Não é permitido letras, apenas números.");
                 entrada.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println("As opções existentes são apenas as listadas acima.");
-                entrada.nextLine();
-            }
-            switch (opcao) {
-                case 1:
-                    adicionarContato(contatos, entrada);
-                    break;
-                case 2:
-                    listarContatos(contatos);
-                    break;
-                case 3:
-                    buscarNome(contatos, entrada);
-                    break;
-                case 4:
-                    excluirContatos(contatos, entrada);
-                    break;
-                case 5:
-                    emergencia(contatosEmergencia, entrada);
-                    break;
-                case 6:
-                    mostrarEmergencia(contatosEmergencia, entrada);
-                    break;
-                case 7:
-                    sair();
-                    System.out.println("-----------");
-                    break;
-                default:
-                    System.out.println("Somente as opções já passadas.");
-                    break;
             }
         }
+
     }
 
      public static void adicionarContato(ArrayList<Pessoa> contatos, Scanner entrada){
@@ -114,15 +121,16 @@ public class Main{
 
         System.out.print("Deseja remover qual contato: ");
         int remover = entrada.nextInt();
+        entrada.nextLine();
 
         if(remover >= 1 && remover <= contatos.size()) {
             contatos.remove(remover - 1);
+            System.out.println("Excluindo contato da listagem.");
         }else{
             System.out.println("Não encontrado.");
         }
 
 
-        System.out.println("Excluindo contato da listagem.");
     }
 
 
@@ -205,11 +213,9 @@ public class Main{
     }
 
 
-
-
     public static void sair(){
-
         System.out.println("Saindo do aplicativo, volte sempre!");
+
     }
 
 }

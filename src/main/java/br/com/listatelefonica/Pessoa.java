@@ -1,4 +1,4 @@
-package org.example;
+package br.com.listatelefonica;
 
 public class Pessoa extends Contatos {
     private String email;

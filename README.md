@@ -11,10 +11,10 @@ listar, buscar e remover contatos com validação de dados.
 
 ## Funcionalidades
 
-- Adicionar contato com nome, celular e email
-- Listar todos os contatos
-- Buscar contato por nome
-- Remover contato
+- Adicionar contato/emergência com nome, celular e email
+- Listar todos os contatos/emergência
+- Buscar contato/emergência por nome
+- Remover contato/emergência
 
 > Novas funcionalidades serão adicionadas conforme o projeto evolui.
 

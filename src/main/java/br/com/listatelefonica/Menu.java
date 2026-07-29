@@ -1,4 +1,4 @@
-package org.example;
+package br.com.listatelefonica;
 
 public class Menu {
     public void Menu() {

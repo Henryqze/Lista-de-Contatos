@@ -1,4 +1,4 @@
-package org.example;
+package br.com.listatelefonica;
 
 public class Emergencia extends Contatos {
    private String relacao;
